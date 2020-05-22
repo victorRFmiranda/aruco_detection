@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 ## System dependencies are found with CMake's conventions
 find_package( rtabmap_ros REQUIRED )
-find_package( OpenCV 4 REQUIRED )
+#find_package( OpenCV 4 REQUIRED )
 
 SET (EIGEN3_INCLUDE_DIR "/usr/include/eigen3/Eigen/src")
 include_directories(${EIGEN3_INCLUDE_DIR})
@@ -145,18 +145,18 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 
-add_executable(get_aruco src/ARUCO.cpp
-				src/aruco_detection.cpp
-				include/aruco_detection.h)
-add_dependencies(get_aruco ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(get_aruco ${catkin_LIBRARIES} ${OpenCV_LIBS}
-					aruco_detection)
+#add_executable(get_aruco src/ARUCO.cpp
+#				src/aruco_detection.cpp
+#				include/aruco_detection.h)
+#add_dependencies(get_aruco ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+#target_link_libraries(get_aruco ${catkin_LIBRARIES} ${OpenCV_LIBS}
+#					aruco_detection)
 
 
-add_library(aruco_detection
-  src/aruco_detection.cpp
-  include/aruco_detection.h
-)
+#add_library(aruco_detection
+#  src/aruco_detection.cpp
+#  include/aruco_detection.h
+#)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

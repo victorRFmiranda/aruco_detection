@@ -23,8 +23,8 @@ class aruco_detection:
 		self.distortion_matrix = 0
 		self.corners = 0
 		self.rot_mat = 0
-		W = 1.0/2.0;
-  		H = 1.0/2.0;
+		W = 0.3/2.0;
+  		H = 0.3/2.0;
   		self.objp = np.array([[-W,-H,0.0], [W,-H,0.0], [W,H,0.0], [-W,H,0.0]])
   		
 
