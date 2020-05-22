@@ -46,7 +46,7 @@ class aruco_detection:
 		self.corners, ids, rejectedImgPoints = aruco.detectMarkers(self.gray_image, self.dictionary, parameters=self.parameters)
 		frame_markers = aruco.drawDetectedMarkers(self.image.copy(), self.corners, ids)
 		pub_image = bridge.cv2_to_imgmsg(frame_markers, encoding="rgb8")
-		if ids.size > 0:
+		if ids is not None:
 			self.pose_from_markers(ids)
 		
 		self.pub_draw.publish(pub_image)
@@ -68,7 +68,7 @@ class aruco_detection:
 				# H_a2_w = np.array([[0,-1,0,-1.7],[1,0,0,-0.6],[0,0,1,-0.15],[0,0,0,1]])
 				H_a2_w = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
 				H_c_d = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
-				H_a_a2 = np.array([[0, 0, 1, 0],   [-1, 0, 0, 0],   [0, -1, 0, 0],   [0, 0, 0, 1]])
+				H_a_a2 = np.array([[0, 0, 1, 0],   [1, 0, 0, 0],   [0, 1, 0, 0],   [0, 0, 0, 1]])
 				# R = rotation_matrix(0.123, (1, 2, 3))
 
 				H_a_w = H_a2_w.dot(H_a_a2)
@@ -76,6 +76,8 @@ class aruco_detection:
 				H_d_w = H_c_w.dot(np.linalg.inv(H_c_d))
 
 				quat = quaternion_from_matrix(H_d_w)
+
+				print(R)
 
 				pose = Pose()
 				pose.position.x = H_d_w[0][3]
