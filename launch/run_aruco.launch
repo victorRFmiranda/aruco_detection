@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!--Run the aruco detection-->
+	<node pkg="aruco_detection" name="aruco_detection" type="detection.py" args="" output="screen">
+		<param name="aruco_size" type="double" value="10.0" />
+		<param name="aruco_pose" type="string" value="[[0,-1,0,18],[-1,0,0,0],[0,0,-1,0],[0,0,0,1]]" />
+		<param name="image_topic" type="string" value="/camera/floor/" /> <!-- camera_info and image_raw -->
+		<param name="pose_topic" type="string" value="aruco_pose" />
+	</node>
+
+	
+</launch>
