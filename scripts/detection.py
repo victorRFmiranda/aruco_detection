@@ -64,6 +64,7 @@ class aruco_detection:
 			R_ = np.concatenate((self.rot_mat,tvecs), axis=1 )
 			R = np.concatenate((R_,np.array([[0,0,0,1]])), axis = 0)
 
+			pose = Pose()
 			if (ids[i] == 0):
 				# H_a2_w = np.array([[0,-1,0,-1.7],[1,0,0,-0.6],[0,0,1,-0.15],[0,0,0,1]])
 				H_a2_w = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
@@ -77,9 +78,6 @@ class aruco_detection:
 
 				quat = quaternion_from_matrix(H_d_w)
 
-				print(R)
-
-				pose = Pose()
 				pose.position.x = H_d_w[0][3]
 				pose.position.y = H_d_w[1][3]
 				pose.position.z = H_d_w[2][3]
@@ -89,7 +87,27 @@ class aruco_detection:
 				pose.orientation.w = quat[3]
 				self.pub_pose.publish(pose)
 			elif (ids[i] == 2):
-				H_a2_w = np.array([[0,-1,0,-2.6],[1,0,0,-0.2],[0,0,1,-1.0],[0,0,0,1]])
+				# H_a2_w = np.array([[0,-1,0,-1.7],[1,0,0,-0.6],[0,0,1,-0.15],[0,0,0,1]])
+				H_a2_w = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
+				H_c_d = np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]])
+				H_a_a2 = np.array([[0, 0, 1, 0],   [1, 0, 0, 0],   [0, 1, 0, 0],   [0, 0, 0, 1]])
+				# R = rotation_matrix(0.123, (1, 2, 3))
+
+				H_a_w = H_a2_w.dot(H_a_a2)
+				H_c_w = H_a_w.dot(np.linalg.inv(R))
+				H_d_w = H_c_w.dot(np.linalg.inv(H_c_d))
+
+				quat = quaternion_from_matrix(H_d_w)
+
+				pose.position.x = H_d_w[0][3]
+				pose.position.y = H_d_w[1][3]
+				pose.position.z = H_d_w[2][3]
+				pose.orientation.x = quat[0]
+				pose.orientation.y = quat[1]
+				pose.orientation.z = quat[2]
+				pose.orientation.w = quat[3]
+
+			self.pub_pose.publish(pose)
 
 
 			
