@@ -66,7 +66,7 @@ class aruco_detection:
 	def callback_image(self, data):
 		bridge = CvBridge()
 		self.image = bridge.imgmsg_to_cv2(data, desired_encoding='rgb8')
-		self.image = cv2.flip(self.image, 0) # vertical flip
+		#self.image = cv2.flip(self.image, 0) # vertical flip
 		self.gray_image = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 		self.corners, ids, rejectedImgPoints = aruco.detectMarkers(self.gray_image, self.dictionary, parameters=self.parameters)
 		frame_markers = aruco.drawDetectedMarkers(self.image.copy(), self.corners, ids)
